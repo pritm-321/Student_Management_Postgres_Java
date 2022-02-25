@@ -50,13 +50,20 @@
 		<br>
 		<div class="container" align="center">
 			<h2>Enter Id to Display:</h2>
-		<form method="POST" action="/getStudentbyID">
-			<input type="text" class="form-control" name="id"/>
+		<form name="Input" method="POST" action="/getStudentbyID" onsubmit="return validateForm()">
+			<input type="text" class="form-control" name="id" placeholder="Id" >
 			<br>
 			<button type="submit" class="btn btn-primary">Submit</button>
 		</form>
 		</div>
 		<script>
+			function validateForm() {
+			  var x = document.forms["Input"]["id"].value;
+			  if (x == "" || x == null || x== " ") {
+			    alert("Please !! Enter your Id ");
+			    return false;
+			  }
+			  }
 			    function myFunction() {
 					 alert("All Students Deleted successfully !");  
 			    }

@@ -48,27 +48,42 @@
 		  </nav>
 	<div class="container">
 		<h1>Enroll Yourself</h1>
-		<form th:action="@{/saveStudent}" th:object="${student}" method="POST">
-			First Name:
-			<input type="text" th:field="*{fName}" class="form-control mb-4 col-4" placeholder="First Name">
-			Last Name:
-			<input type="text" th:field="*{lName}" class="form-control mb-4 col-4" placeholder="Last Name">
-			Gender:
-			<input type="text" th:field="*{gender}" class="form-control mb-4 col-4" placeholder="Gender">
-			Address:
-			<input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address">
-			Mobile Number
-			<input type="number" th:field="*{mobile}" class="form-control mb-4 col-4" placeholder="Mobile">
-			Email Id:
-			<input type="text" th:field="*{email}" class="form-control mb-4 col-4" placeholder="name@example.com">
-			<button type="submit" onclick="myFunction1()" class="btn btn-info col-2">Save Student</button>
+		<form name="Input" th:action="@{/saveStudent}" th:object="${student}" method="POST" onsubmit="return validateForm()">
+			<strong>First Name :</strong>
+			<input type="text" th:field="*{fName}" name="fName" class="form-control mb-4 col-4" placeholder="First Name">
+			<strong>Last Name :</strong>
+			<input type="text" th:field="*{lName}" name="lName" class="form-control mb-4 col-4" placeholder="Last Name">
+		    <strong>Gender :</strong>
+		    <div class="form-check form-check-inline">
+		        <input class="form-check-input" type="radio" th:field="*{gender}" id="option1" name="gender"value="Female">
+		        <label class="form-check-label" for="option1">Female</label>
+		    </div>
+		    <div class="form-check form-check-inline">
+		        <input class="form-check-input" type="radio" th:field="*{gender}" id="option2" name="gender" value="Male">
+		        <label class="form-check-label" for="option2">Male</label>
+		    </div>
+		    <br><br>
+			<strong>Address:</strong>
+			<input type="text" th:field="*{address}" name="address" class="form-control mb-4 col-4" placeholder="Address">
+			<strong>Mobile Number :</strong>
+			<input type="text" th:field="*{mobile}" name="mobile" class="form-control mb-4 col-4" placeholder="Mobile">
+			<strong>Email Id :</strong>
+			<input type="text" th:field="*{email}" name="email" class="form-control mb-4 col-4" placeholder="name@example.com">
+			<button type="submit" class="btn btn-info col-2">Save Student</button>
 		</form>
 		<script>
+			function validateForm() {
+			  var x = document.forms["Input"]["fName","lName","gender","address","mobile","email"].value;
+			  if (x == "" || x == null || x== " ") {
+			    alert("All details must be filled out");
+			    return false;
+			  }
+			  else{
+			  	alert("Student Saved successfully !");
+	  			}
+			  }
 			    function myFunction() {
 					 alert("All Students Deleted successfully !");  
-			    }
-			    function myFunction1() {
-					 alert("Student Saved successfully !");
 			    }
 		</script>
 	</div>
