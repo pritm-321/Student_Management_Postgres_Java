@@ -1,7 +1,5 @@
 package com.StudentManagement.controller;
 
-import javax.swing.JOptionPane;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +26,6 @@ public class StudentController {
 		return "index";
 	}
 	
-	//INSERT
 	@GetMapping("/saveStudentLayer")
 	public String saveStudentLayer(Student student) {
 		return "saveStudentLayer";
@@ -39,7 +36,7 @@ public class StudentController {
 		studentService.saveStudent(s);
 		return "redirect:/";
 	}
-	//DISPLAY
+	
 	@GetMapping("/getAllStudents")
 	public String getAllStudents(Model m) {
 		m.addAttribute("students", studentService.displayAllStudent());
@@ -47,34 +44,38 @@ public class StudentController {
 	}
 	
 	@GetMapping("/getStudentbyIDLayer")
-	public String getStudentbyIDLayer() {
-		return "getStudentbyIDLayer";
+	public String getStudentbyIDLayer(Model m) {
+		m.addAttribute("url", "/getStudentbyID");
+		return "getIDLayer";
 	}
 	
 	@PostMapping("/getStudentbyID")
-	public String getStudentbyID(@RequestParam("id") Long id,Model m){
+	public String getStudentbyID(@RequestParam("id")  String id0, Model m) {
+		Long id = validateID(id0);
 		try {
 			m.addAttribute("students", studentService.displayById(id));
 			return "getStudents";
 		} catch (InvalidIdException e) {
-			JOptionPane.showMessageDialog(null,e+"\n Please Enter It Again");
-			return "getStudentbyIDLayer";
+			m.addAttribute("url", "/getStudentbyIDLayer");
+			return "IDNotFound";
 		}
 	}
 	//update
 	@GetMapping("/updateStudentByIDLayer")
-	public String updateStudentByIDLayer() {
-		return "updateStudentByIDLayer";
+	public String updateStudentByIDLayer(Model m) {
+		m.addAttribute("url", "/updateStudentByID");
+		return "getIDLayer";
 	}
 
 	@PostMapping("/updateStudentByID")
-	public String updateStudentByID(@RequestParam("id") Long id, Model m) {
+	public String updateStudentByID(@RequestParam("id") String id0, Model m) {
+		Long id = validateID(id0);
 		try {
 			m.addAttribute("student", studentService.updateStudent(id));
 			return "updateStudentForm";
 		} catch (InvalidIdException e) {
-			JOptionPane.showMessageDialog(null,e+"\n Please Enter It Again");
-			return "updateStudentByIDLayer";
+			m.addAttribute("url", "/updateStudentByIDLayer");
+			return "IDNotFound";
 		}
 	}
 	
@@ -86,22 +87,30 @@ public class StudentController {
 	}
 	
 	@GetMapping("/deleteStudentByIDLayer")
-	public String deleteStudentByIDLayer() {
-		return "deleteStudentByIDLayer";
+	public String deleteStudentByIDLayer(Model m) {
+		m.addAttribute("url", "/deleteStudentByID");
+		return "getIDLayer";
 	}
 	
 	@PostMapping("/deleteStudentByID")
-	public String deleteStudentByID(@RequestParam("id") Long id) {
-		
+	public String deleteStudentByID(@RequestParam("id") String id0, Model m) {
+		Long id = validateID(id0);
 		try {
 			studentService.deleteStudentbyId(id);
-			JOptionPane.showMessageDialog(null, "Student Deleted Successfully");
 			return "redirect:/";
 		} catch (InvalidIdException e) {
-			JOptionPane.showMessageDialog(null,e+"\n Please Enter It Again");
-			return "deleteStudentByIDLayer";
+			m.addAttribute("url", "/deleteStudentByIDLayer");
+			return "IDNotFound";
 		}
 		
+	}
+	private Long validateID(String id0) {
+		try {
+			Long id = Long.parseLong(id0);
+			return id;
+		} catch (NumberFormatException e) {
+			return 0L;
+		}
 	}
 	
 	

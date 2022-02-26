@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Display</title>
+		<title>ID</title>
+		
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 		<link rel="stylesheet"  href="/css/style.css">
@@ -49,32 +50,19 @@
 		  </div>
 		</nav>
 		<br>
-		<h1 class="heading">Students Enrolled</h1>
-		<div class="content">
-			<table border="1" class="table table-striped">
-				<thead class="table-dark">
-					<tr>
-						<th>ID</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Gender</th> 
-						<th>Email Id</th>
-						<th>Address</th>
-						<th>Mobile No</th>
-					</tr>
-				</thead>
-				<tbody>
-				<tr th:each="student : ${students}">
-                    <td th:text="${student.id}"></td>
-                    <td th:text="${student.fName}"></td>
-                    <td th:text="${student.lName}"></td>
-                    <td th:text="${student.gender}"></td>
-                    <td th:text="${student.email}"></td>
-                    <td th:text="${student.address}"></td>
-                    <td th:text="${student.mobile}"></td>
-                </tr>
-				</tbody>
-			</table>
+		<div class="container" align="center">
+			<h2>Enter Id:</h2>
+			<form method="POST" th:action="@{${url}}">
+				<input type="text" class="form-control" name="id" required>
+				<br>
+				<span th:if="${url == '/deleteStudentByID'}">
+					<button type="submit" onsubmit="deletebyID()" class="btn btn-primary">Submit</button>
+				</span>
+				<span th:unless="${url == '/deleteStudentByID'}">
+					<button type="submit" onclick="return validateId()" class="btn btn-primary">Submit</button>
+				</span>
+			</form>
 		</div>
+		
 	</body>
 </html>

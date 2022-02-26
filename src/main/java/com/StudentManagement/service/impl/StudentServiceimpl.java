@@ -36,8 +36,6 @@ public class StudentServiceimpl implements StudentService {
 			throw new InvalidIdException("Student", "Id", id);
 		}
 		
-		/*return studentRepository.findById(id).get().orElseThrow(() -> 
-		new ResourceNotFoundException("Student","Id", id));*/
 	}
 
 	@Override

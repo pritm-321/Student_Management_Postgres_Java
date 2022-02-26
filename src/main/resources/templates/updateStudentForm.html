@@ -5,12 +5,14 @@
 		<title>Update Form</title>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-		<link rel="stylesheet"  href="/style.css">
+		<link rel="stylesheet"  href="/css/style.css">
+		<link rel="icon" href="favicon.png">
+		<script type="text/javascript" src="js/custom.js"></script>
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="/">
 						  <img src="logo2.jpg" alt="Logo" style="width:80px;">
 				</a>
 			  <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -38,7 +40,7 @@
 					  Delete
 					</a>
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-					  <li><a class="dropdown-item" href="/deleteAllStudent" onclick="myFuction()">All Students</a></li>
+					  <li><a class="dropdown-item" href="/deleteAllStudent" onclick="deleteAll()">All Students</a></li>
 					  <li><a class="dropdown-item" href="/deleteStudentByIDLayer">Individual Students</a></li>
 					</ul>
 				  </li>
@@ -48,31 +50,34 @@
 		  </nav>
 	<div class="container">
 		<h1 class="heading">Update Yourself</h1>
-		 
-		<form th:action="@{/saveStudent}" th:object="${student}" method="POST">
+		<form name="Input" th:action="@{/saveStudent}" th:object="${student}" method="POST" onsubmit="updated()">
 			<input type="hidden" th:field="*{id}" />
-			First Name: 
-			<input type="text" th:field="*{fName}" class="form-control mb-4 col-4" placeholder="First Name">
-			LAst Name:
-			<input type="text" th:field="*{lName}" class="form-control mb-4 col-4" placeholder="Last Name">
-			Gender:
-			<input type="text" th:field="*{gender}" class="form-control mb-4 col-4" placeholder="Gender">
-			Address:
-			<input type="text" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address">
-			Mobile Number
-			<input type="number" th:field="*{mobile}" class="form-control mb-4 col-4" placeholder="Mobile">
-			Email Id:
-			<input type="text" th:field="*{email}" class="form-control mb-4 col-4" placeholder="name@example.com">
-			<button type="submit" onclick="myFunction1()" class="btn btn-info col-2">Update Student</button>
+			<strong>First Name:</strong>
+			<input type="text" name="fName" th:field="*{fName}" class="form-control mb-4 col-4" placeholder="First Name" required>
+			<strong>Last Name:</strong>
+			<input type="text" name="lName" th:field="*{lName}" class="form-control mb-4 col-4" placeholder="Last Name" required>
+			<strong>Gender:</strong>
+		    <div class="form-check form-check-inline">
+		        <input class="form-check-input" type="radio" th:field="*{gender}" id="option1" name="gender"value="Female" required>
+		        <label class="form-check-label" for="option1">Female</label>
+		    </div>
+		    <div class="form-check form-check-inline">
+		        <input class="form-check-input" type="radio" th:field="*{gender}" id="option2" name="gender" value="Male" required>
+		        <label class="form-check-label" for="option2">Male</label>
+		    </div>
+		    <div class="form-check form-check-inline">
+		        <input class="form-check-input" type="radio" th:field="*{gender}" id="option3" name="gender" value="Others" required>
+		        <label class="form-check-label" for="option3">Others</label>
+		    </div>
+		    <br><br>
+			<strong>Address:</strong>
+			<input type="text" name="address" th:field="*{address}" class="form-control mb-4 col-4" placeholder="Address" required>
+			<strong>Mobile Number:</strong>
+			<input type="number" name="mobile" th:field="*{mobile}" class="form-control mb-4 col-4" placeholder="Mobile" required>
+			<strong>Email Id:</strong>
+			<input type="text" name="email" th:field="*{email}" class="form-control mb-4 col-4" placeholder="name@example.com" required>
+			<button type="submit"  class="btn btn-info col-2">Update Student</button>
 		</form>
 	</div>
-	<script>
-			    function myFunction() {
-					 alert("All Students Deleted successfully !");  
-			    }
-			    function myFunction1() {
-					 alert("Updated Successfully !");  
-			    }
-	</script>
 </body>
 </html>
